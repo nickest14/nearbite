@@ -1,0 +1,48 @@
+schema: spec-driven
+
+# 專案背景 — AI 建立 artifact 時會參考這段內容。
+context: |
+  專案：「Nearbite」— 餐廳搜尋 App。使用者可以探索附近的餐廳、瀏覽餐廳資訊
+  （料理類型、價位、營業時間、地點、照片），並閱讀／撰寫評論與評分。
+
+  平台：行動優先（mobile-first）的網頁應用，可安裝為 PWA。以手機螢幕為優先設計
+  （觸控目標尺寸、底部導覽列、單手操作）；桌面版版面屬於漸進增強。
+
+  技術棧：
+    - Next.js（App Router）+ React，TypeScript 開啟 strict 模式
+    - 樣式使用 Tailwind CSS
+    - Prisma ORM；本機開發用 SQLite，正式環境用 Postgres
+    - 預設使用 Server Components；只有需要互動或瀏覽器 API（例如定位）時
+      才使用 Client Components
+    - 資料異動與 API 使用 Server Actions / Route Handlers
+
+  領域說明：
+    - 定位是核心功能：請求定位權限時，若使用者拒絕，必須提供明確的替代方案
+      （手動搜尋城市／地址）。
+    - 核心實體：Restaurant（餐廳）、Review（評論）、User（使用者）、
+      Favorite（收藏）。
+
+  開發慣例：
+    - 使用 Conventional Commits（feat:、fix:、chore:、refactor:、docs:、test:）
+    - 變更保持小而聚焦；每個 change 只處理一項功能
+    - 所有 artifact（proposal、design、specs、tasks）一律使用繁體中文撰寫
+
+# 各 artifact 的規則
+rules:
+  proposal:
+    - 提案保持精簡（約 500 字以內）
+    - 必須包含「非目標（Non-goals）」章節
+    - 須說明對行動裝置體驗或定位／隱私的影響
+  tasks:
+    - 每個任務拆分為最多 2 小時的工作量
+    - 每個任務都要能獨立驗證
+
+# 各操作的執行指引
+operations:
+  apply:
+    guidance:
+      - UI 變更先在手機寬度（約 375px）下驗證
+      - 提交 commit 時使用 Conventional Commits 格式
+  archive:
+    guidance:
+      - 結束前先總結封存（archive）結果
