@@ -11,16 +11,31 @@ context: |
   技術棧：
     - Next.js（App Router）+ React，TypeScript 開啟 strict 模式
     - 樣式使用 Tailwind CSS
-    - Prisma ORM；本機開發用 SQLite，正式環境用 Postgres
+    - Prisma ORM + PostgreSQL；本機開發用 Docker Compose 啟動 Postgres，
+      正式環境同樣使用 Postgres（開發／正式資料庫引擎一致）
     - 預設使用 Server Components；只有需要互動或瀏覽器 API（例如定位）時
       才使用 Client Components
     - 資料異動與 API 使用 Server Actions / Route Handlers
 
+  外部服務（已決定）：
+    - 餐廳資料：Google Places API (New)。餐廳以 googlePlaceId 為主鍵快取到自家 DB，
+      Google 欄位設定 TTL（≤ 30 天）定期重抓；place_id 可永久保存。
+    - 地圖：Google Maps JavaScript API（@vis.gl/react-google-maps）。
+      Places 資料依條款只能顯示在 Google 地圖上，不可改用 Leaflet / Mapbox。
+    - 登入：Auth.js (NextAuth v5) + Google OAuth，搭配 ALLOWED_EMAILS 白名單。
+    - 金鑰分兩把：伺服器端（Places、Geocoding）與瀏覽器端（Maps JS，限 referrer）。
+
   領域說明：
     - 定位是核心功能：請求定位權限時，若使用者拒絕，必須提供明確的替代方案
-      （手動搜尋城市／地址）。
-    - 核心實體：Restaurant（餐廳）、Review（評論）、User（使用者）、
-      Favorite（收藏）。
+      （手動搜尋城市／地址，透過 Geocoding API 轉座標）。
+    - 核心實體：User（使用者）、Restaurant（餐廳快取）、Review（評論）、
+      FavoriteList（收藏清單）、FavoriteItem（清單項目）。
+    - 自家評分（朋友圈的評論平均）與 Google 評分分開顯示，不混算。
+
+  產品定位：
+    - 自己與朋友使用的小工具，不對外公開。不做 SEO、法律頁面與複雜的濫用防護，
+      但基本的輸入驗證與授權檢查仍要做。
+    - 完整規劃見 docs/product-plan.md，開發順序以該文件的路線圖為準。
 
   開發慣例：
     - 使用 Conventional Commits（feat:、fix:、chore:、refactor:、docs:、test:）
