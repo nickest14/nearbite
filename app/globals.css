@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/* ============================================================
+   原始 token（Tailwind 4 CSS-first 主題）
+   這一層只放「值」，不帶語意。品牌色先用暖橘佔位，之後換色只改這裡。
+   ============================================================ */
+@theme {
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-brand-900: #7c2d12;
+
+  /* 系統字型堆疊，繁中優先 PingFang（Apple）/ Noto Sans TC（Android、Windows） */
+  --font-sans:
+    system-ui, -apple-system, "PingFang TC", "Noto Sans TC", "Helvetica Neue", Arial, sans-serif;
+
+  /* 44px：行動裝置最小觸控目標，用法 min-h-touch / min-w-touch */
+  --spacing-touch: 2.75rem;
+
+  /* 桌面版內容區最大寬度 1024px，用法 max-w-content */
+  --container-content: 64rem;
+
+  --radius-card: 1rem;
+}
+
+/* ============================================================
+   語意 token（隨深色模式切換）
+   元件只用這一層：bg-surface、text-text、text-text-muted、border-border、bg-accent。
+   值對應上面的 brand 色階或 Tailwind 內建 stone 色階。
+   ============================================================ */
+:root {
+  --nav-height: 4rem;
+
+  --surface: #fffbf7;
+  --surface-elevated: #ffffff;
+  --text: #1c1917;
+  --text-muted: #78716c;
+  --border: #e7e5e4;
+  --accent: #f97316; /* brand-500 */
+  --accent-foreground: #ffffff;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #0c0a09;
+    --surface-elevated: #1c1917;
+    --text: #fafaf9;
+    --text-muted: #a8a29e;
+    --border: #292524;
+    --accent: #fb923c; /* brand-400，深色底上對比較好 */
+    --accent-foreground: #1c1917;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+}
+
+/* ============================================================
+   版面工具：底部導覽列高度與 iOS 安全區域
+   ============================================================ */
+
+/* 底部導覽列本身的高度 */
+@utility h-nav {
+  height: var(--nav-height);
+}
+
+/* 導覽列底部內距 = 安全區域（Home indicator） */
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 內容區底部預留 = 導覽列高度 + 安全區域，避免最後一行被導覽列遮住 */
+@utility pb-nav-safe {
+  padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
+}
+
+/* ============================================================
+   全域基礎樣式
+   ============================================================ */
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  /* 行動裝置點擊時不要出現灰色高亮方塊 */
+  -webkit-tap-highlight-color: transparent;
+}

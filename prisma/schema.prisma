@@ -1,0 +1,19 @@
+// Nearbite 資料模型。完整規劃見 docs/product-plan.md 第 6 節，
+// 各實體由對應的 OpenSpec change 逐步加入，這裡目前只有 User 的基礎欄位。
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  image     String?
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,17 @@
+node_modules
+.next
+out
+build
+coverage
+pnpm-lock.yaml
+next-env.d.ts
+# Next.js 自動產生與維護
+AGENTS.md
+# OpenSpec 規劃文件由 openspec CLI 維護格式
+openspec
+# Prisma 產生的 migration SQL 不排版
+prisma/migrations
+# Prisma 產生的程式碼
+generated
+# Claude Code / OpenSpec 的指令與 skill 檔由工具維護
+.claude

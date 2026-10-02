@@ -22,17 +22,17 @@ Nearbite 是一個給自己和朋友用的「附近吃什麼」工具：打開�
 
 ### V1（這次要做完的）
 
-| 功能 | 說明 |
-|---|---|
-| Google 登入 | Auth.js + Google OAuth，email 白名單控制誰能進來 |
-| 附近搜尋 | 取得定位 → 顯示附近餐廳的列表與地圖；拒絕定位時可手動輸入地址或地標 |
-| 關鍵字搜尋 | 在目前位置附近搜「拉麵」「咖啡」等關鍵字 |
-| 篩選與排序 | 料理類型、價位、最低評分、營業中、距離；依距離／Google 評分／自家評分／價位排序 |
-| 餐廳詳情 | 名稱、照片、地址、電話、網站、營業時間、價位、Google 評分、自家評分、小地圖、一鍵導航 |
-| 評論與評分 | 1–5 星 + 文字，每人每間餐廳一則，可編輯／刪除；詳情頁列出所有朋友的評論 |
-| 收藏清單 | 多個清單（預設「我的最愛」），餐廳可加到多個清單並附備註；清單可產生分享連結給朋友看 |
-| 個人頁 | 我的評論、我的清單、登出 |
-| PWA | 可安裝到手機主畫面、有 icon 與啟動畫面、基本離線殼層 |
+| 功能        | 說明                                                                                  |
+| ----------- | ------------------------------------------------------------------------------------- |
+| Google 登入 | Auth.js + Google OAuth，email 白名單控制誰能進來                                      |
+| 附近搜尋    | 取得定位 → 顯示附近餐廳的列表與地圖；拒絕定位時可手動輸入地址或地標                   |
+| 關鍵字搜尋  | 在目前位置附近搜「拉麵」「咖啡」等關鍵字                                              |
+| 篩選與排序  | 料理類型、價位、最低評分、營業中、距離；依距離／Google 評分／自家評分／價位排序       |
+| 餐廳詳情    | 名稱、照片、地址、電話、網站、營業時間、價位、Google 評分、自家評分、小地圖、一鍵導航 |
+| 評論與評分  | 1–5 星 + 文字，每人每間餐廳一則，可編輯／刪除；詳情頁列出所有朋友的評論               |
+| 收藏清單    | 多個清單（預設「我的最愛」），餐廳可加到多個清單並附備註；清單可產生分享連結給朋友看  |
+| 個人頁      | 我的評論、我的清單、登出                                                              |
+| PWA         | 可安裝到手機主畫面、有 icon 與啟動畫面、基本離線殼層                                  |
 
 ### V2（做完 V1 再說）
 
@@ -90,19 +90,19 @@ Nearbite 是一個給自己和朋友用的「附近吃什麼」工具：打開�
 
 ### 技術棧
 
-| 層 | 選擇 | 備註 |
-|---|---|---|
-| 框架 | Next.js（App Router）+ React + TypeScript strict | 預設 Server Components |
-| 樣式 | Tailwind CSS | 行動優先，375px 為基準 |
-| 資料庫 | PostgreSQL 16 | 本機用 Docker Compose |
-| ORM | Prisma | migrate + seed |
-| 認證 | Auth.js (NextAuth v5) + Google provider | Prisma adapter，資料庫 session |
-| 地圖 | Google Maps JavaScript API | 透過 `@vis.gl/react-google-maps` |
-| 餐廳資料 | Google Places API (New) | Nearby Search、Text Search、Place Details、Place Photos |
-| 地址轉座標 | Google Geocoding API | 拒絕定位時的替代方案 |
-| 驗證 | Zod | Server Action 輸入驗證 |
-| 測試 | Vitest + Testing Library；Playwright 做少量 E2E | |
-| 部署 | 未定 | 先維持 Vercel 相容（無長駐程序、無本機檔案寫入） |
+| 層         | 選擇                                             | 備註                                                    |
+| ---------- | ------------------------------------------------ | ------------------------------------------------------- |
+| 框架       | Next.js（App Router）+ React + TypeScript strict | 預設 Server Components                                  |
+| 樣式       | Tailwind CSS                                     | 行動優先，375px 為基準                                  |
+| 資料庫     | PostgreSQL 16                                    | 本機用 Docker Compose                                   |
+| ORM        | Prisma                                           | migrate + seed                                          |
+| 認證       | Auth.js (NextAuth v5) + Google provider          | Prisma adapter，資料庫 session                          |
+| 地圖       | Google Maps JavaScript API                       | 透過 `@vis.gl/react-google-maps`                        |
+| 餐廳資料   | Google Places API (New)                          | Nearby Search、Text Search、Place Details、Place Photos |
+| 地址轉座標 | Google Geocoding API                             | 拒絕定位時的替代方案                                    |
+| 驗證       | Zod                                              | Server Action 輸入驗證                                  |
+| 測試       | Vitest + Testing Library；Playwright 做少量 E2E  |                                                         |
+| 部署       | 未定                                             | 先維持 Vercel 相容（無長駐程序、無本機檔案寫入）        |
 
 ### 外部服務與金鑰
 
@@ -276,25 +276,25 @@ Docker Compose 只負責 Postgres；Next.js 直接在本機跑，熱更新最快
 
 每一項對應一個 OpenSpec change，依序進行。括號內是粗估的工作量（一個人、每天幾小時）。
 
-| # | Change | 內容 | 完成的定義 |
-|---|---|---|---|
-| 1 | `scaffold-nextjs-app` | Next.js + TS strict + Tailwind + Prisma + ESLint/Prettier + Vitest；連上 Compose 的 Postgres；底部導覽與頁面殼層；設計 token（顏色、間距、字級） | `pnpm dev` 能跑、四個 tab 可切換、`prisma migrate dev` 成功（1–2 天） |
-| 2 | `google-auth` | Auth.js + Google provider + Prisma adapter；白名單；登入頁；受保護路由；個人頁顯示名稱／頭像／登出 | 白名單內的帳號能登入，白名單外被拒並看到說明（1 天） |
-| 3 | `nearby-search` | 定位請求與拒絕的 fallback（地址輸入 + Geocoding）；Nearby Search Server Action；Restaurant upsert；結果列表卡片；Google Maps 顯示結果 marker；列表⇄地圖切換 | 允許與拒絕定位兩條路都能搜到結果並顯示在列表和地圖上（3–4 天） |
-| 4 | `restaurant-detail` | Place Details 抓取與 7/30 天快取邏輯；詳情頁版面；照片代理 Route Handler；營業時間與「現在營業中」判斷；導航連結 | 從列表點進詳情，資訊完整、照片可見、過期資料會自動更新（2–3 天） |
-| 5 | `reviews` | 評論 CRUD Server Actions + Zod；底部抽屜表單；詳情頁評論列表；自家評分計算並顯示在卡片與詳情 | 能新增、編輯、刪除自己的評論，卡片上看得到朋友圈平均（2 天） |
-| 6 | `favorite-lists` | 預設清單自動建立；清單 CRUD；加入／移除餐廳與備註；清單詳情含地圖；分享連結 `/share/[token]` | 能建多個清單、一間店加進多個清單、分享連結不登入可看（2–3 天） |
-| 7 | `search-filters` | 關鍵字搜尋頁（Text Search）；篩選：料理類型、價位、最低評分、營業中、距離；排序：距離、Google 評分、自家評分、價位；URL 同步篩選狀態 | 篩選與排序即時生效、重新整理後狀態保留（2 天） |
-| 8 | `pwa` | manifest、icons、啟動畫面；Service Worker 離線殼層；安裝提示；iOS 的 meta 標籤 | 手機能「加入主畫面」，離線開啟看到殼層與友善提示（1 天） |
-| 9 | `deployment` | 選定平台（傾向 Vercel + Neon）；正式環境變數；DB 備份策略；錯誤監控；Google 金鑰 referrer 與配額設定 | 朋友能用正式網址登入並使用（1–2 天，待決定平台後進行） |
+| #   | Change                | 內容                                                                                                                                                        | 完成的定義                                                            |
+| --- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| 1   | `scaffold-nextjs-app` | Next.js + TS strict + Tailwind + Prisma + ESLint/Prettier + Vitest；連上 Compose 的 Postgres；底部導覽與頁面殼層；設計 token（顏色、間距、字級）            | `pnpm dev` 能跑、四個 tab 可切換、`prisma migrate dev` 成功（1–2 天） |
+| 2   | `google-auth`         | Auth.js + Google provider + Prisma adapter；白名單；登入頁；受保護路由；個人頁顯示名稱／頭像／登出                                                          | 白名單內的帳號能登入，白名單外被拒並看到說明（1 天）                  |
+| 3   | `nearby-search`       | 定位請求與拒絕的 fallback（地址輸入 + Geocoding）；Nearby Search Server Action；Restaurant upsert；結果列表卡片；Google Maps 顯示結果 marker；列表⇄地圖切換 | 允許與拒絕定位兩條路都能搜到結果並顯示在列表和地圖上（3–4 天）        |
+| 4   | `restaurant-detail`   | Place Details 抓取與 7/30 天快取邏輯；詳情頁版面；照片代理 Route Handler；營業時間與「現在營業中」判斷；導航連結                                            | 從列表點進詳情，資訊完整、照片可見、過期資料會自動更新（2–3 天）      |
+| 5   | `reviews`             | 評論 CRUD Server Actions + Zod；底部抽屜表單；詳情頁評論列表；自家評分計算並顯示在卡片與詳情                                                                | 能新增、編輯、刪除自己的評論，卡片上看得到朋友圈平均（2 天）          |
+| 6   | `favorite-lists`      | 預設清單自動建立；清單 CRUD；加入／移除餐廳與備註；清單詳情含地圖；分享連結 `/share/[token]`                                                                | 能建多個清單、一間店加進多個清單、分享連結不登入可看（2–3 天）        |
+| 7   | `search-filters`      | 關鍵字搜尋頁（Text Search）；篩選：料理類型、價位、最低評分、營業中、距離；排序：距離、Google 評分、自家評分、價位；URL 同步篩選狀態                        | 篩選與排序即時生效、重新整理後狀態保留（2 天）                        |
+| 8   | `pwa`                 | manifest、icons、啟動畫面；Service Worker 離線殼層；安裝提示；iOS 的 meta 標籤                                                                              | 手機能「加入主畫面」，離線開啟看到殼層與友善提示（1 天）              |
+| 9   | `deployment`          | 選定平台（傾向 Vercel + Neon）；正式環境變數；DB 備份策略；錯誤監控；Google 金鑰 referrer 與配額設定                                                        | 朋友能用正式網址登入並使用（1–2 天，待決定平台後進行）                |
 
 總計約 15–20 個工作天。1–2 是基礎，3–4 是核心體驗，5–7 是差異化功能，8–9 是上線。
 
 ## 10. 待決定事項
 
-| 事項 | 選項 | 預計何時決定 |
-|---|---|---|
-| 正式環境部署平台 | Vercel + Neon／Supabase；或自己的 VPS 全 Docker | Change 8 完成後 |
-| 評論是否開放「匿名給朋友看、但顯示名字給自己看」 | 目前假設所有評論都實名 | Change 5 前 |
-| 清單分享連結是否要有效期限 | 目前假設永久有效、可手動關閉 | Change 6 前 |
-| 料理類型篩選要用 Google 的 place types 還是自訂分類對照 | Google types 很細（`ramen_restaurant`），可能需要對照成「日式」「中式」 | Change 7 前 |
+| 事項                                                    | 選項                                                                    | 預計何時決定    |
+| ------------------------------------------------------- | ----------------------------------------------------------------------- | --------------- |
+| 正式環境部署平台                                        | Vercel + Neon／Supabase；或自己的 VPS 全 Docker                         | Change 8 完成後 |
+| 評論是否開放「匿名給朋友看、但顯示名字給自己看」        | 目前假設所有評論都實名                                                  | Change 5 前     |
+| 清單分享連結是否要有效期限                              | 目前假設永久有效、可手動關閉                                            | Change 6 前     |
+| 料理類型篩選要用 Google 的 place types 還是自訂分類對照 | Google types 很細（`ramen_restaurant`），可能需要對照成「日式」「中式」 | Change 7 前     |
