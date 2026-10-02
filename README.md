@@ -73,5 +73,5 @@ openspec/         規格與 change
 
 ## 疑難排解
 
-- `docker compose up` 卡住、`docker pull` 沒有任何輸出：檢查 Docker Desktop → Settings → Resources → Proxies。若 macOS 系統 proxy 指向目前連不到的位置（例如公司 VPN 關閉時），Docker 會跟著卡住。
+- `docker compose up` 卡住、`docker pull` 停在「Pulling fs layer」沒有進度：通常是 Docker Desktop 的 VM 網路卡死（睡眠或切換 VPN 後常見），registry 連得到但 layer 下載不動。重啟 Docker Desktop 即可；若選單的 Restart 沒反應，用 `pkill -f com.docker.backend` 強制結束後再 `open -a Docker`。
 - `pnpm` 執行時出現 `Cannot find module .../bin/pnpm.cjs`：corepack 版本太舊，執行 `npm install -g corepack@latest` 後重試。
