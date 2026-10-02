@@ -24,9 +24,9 @@
       驗證：`pnpm prisma --version` 顯示 7.x
 - [x] 3.2 撰寫 `prisma/schema.prisma`：datasource postgresql、generator client，以及 `User` model（`id`、`email` unique、`name?`、`image?`、`createdAt`）
       驗證：`pnpm prisma validate` 通過
-- [ ] 3.3 啟動 `docker compose up -d`，執行 `pnpm prisma migrate dev --name init` 建立第一個 migration
+- [x] 3.3 啟動 `docker compose up -d`，執行 `pnpm prisma migrate dev --name init` 建立第一個 migration
       驗證：`prisma/migrations/` 出現 init 資料夾；`pnpm prisma studio` 看得到 `User` 表
-- [ ] 3.4 建立 `lib/db.ts`：以 `@prisma/adapter-pg` 建立 Prisma Client 單例，開發模式掛在 `globalThis`，附註解說明 Prisma 7 driver adapter 模式
+- [x] 3.4 建立 `lib/db.ts`：以 `@prisma/adapter-pg` 建立 Prisma Client 單例，開發模式掛在 `globalThis`，附註解說明 Prisma 7 driver adapter 模式
       驗證：在 Node REPL 或臨時腳本 `import { db } from '@/lib/db'` 後執行 `db.user.count()` 回傳 0
 
 ## 4. 設計 token 與全域樣式
@@ -67,7 +67,7 @@
 
 - [x] 8.1 撰寫 `README.md`：專案一句話說明、需求（Node 20+／pnpm／Docker）、本機啟動步驟（複製 env → compose up → install → migrate → dev）、常用指令、Prisma 7 與版本鎖定的注意事項、連結到 `docs/product-plan.md`
       驗證：照 README 從零走一遍能跑起來
-- [ ] 8.2 檢查 `.env.example` 是否需補充（例如 `NODE_ENV` 不需要；確認 `DATABASE_URL` 格式與 `prisma.config.ts` 一致）
+- [x] 8.2 檢查 `.env.example` 是否需補充（例如 `NODE_ENV` 不需要；確認 `DATABASE_URL` 格式與 `prisma.config.ts` 一致）
       驗證：`cp .env.example .env` 後不改其他值即可 `prisma migrate dev`
 - [ ] 8.3 在 375px 寬度下手動走過四個頁面與 404，確認觸控尺寸與 safe-area；在 1280px 下確認桌面版面；最後執行 `pnpm check` 全綠
       驗證：`pnpm check` 退出碼 0，手動檢查無版面問題
