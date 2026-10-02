@@ -69,5 +69,5 @@
       驗證：照 README 從零走一遍能跑起來
 - [x] 8.2 檢查 `.env.example` 是否需補充（例如 `NODE_ENV` 不需要；確認 `DATABASE_URL` 格式與 `prisma.config.ts` 一致）
       驗證：`cp .env.example .env` 後不改其他值即可 `prisma migrate dev`
-- [ ] 8.3 在 375px 寬度下手動走過四個頁面與 404，確認觸控尺寸與 safe-area；在 1280px 下確認桌面版面；最後執行 `pnpm check` 全綠
+- [x] 8.3 在 375px 寬度下手動走過四個頁面與 404，確認觸控尺寸與 safe-area；在 1280px 下確認桌面版面；最後執行 `pnpm check` 全綠
       驗證：`pnpm check` 退出碼 0，手動檢查無版面問題
