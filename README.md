@@ -37,6 +37,19 @@ pnpm dev                      # http://localhost:3000
 
 確認一切正常：開啟 http://localhost:3000/api/health 應回傳 `{"status":"ok","database":"ok",...}`。
 
+## Google OAuth 設定
+
+登入只支援 Google 帳號，需要一組 OAuth client（免費，不用綁信用卡）：
+
+1. 到 [Google Cloud Console](https://console.cloud.google.com/) 建立或選擇一個專案
+2. **APIs & Services → OAuth consent screen**：User type 選 External，填應用名稱與聯絡 email；Publishing status 維持 **Testing**，在 Test users 加入自己和朋友的 Google 帳號（上限 100 人，夠用）
+3. **APIs & Services → Credentials → Create Credentials → OAuth client ID**：Application type 選 Web application，Authorized redirect URIs 填 `http://localhost:3000/api/auth/callback/google`（正式環境再加一筆正式網址）
+4. 把 Client ID 與 Client Secret 填進 `.env` 的 `AUTH_GOOGLE_ID`、`AUTH_GOOGLE_SECRET`
+5. `AUTH_SECRET` 用 `openssl rand -base64 32` 產生
+6. `ALLOWED_EMAILS` 填允許登入的 email，逗號分隔、不分大小寫。**正式環境必填**：留空時正式環境會拒絕所有登入；開發環境留空則任何 Google 帳號都能登入
+
+Google 不會對 OAuth 登入收費。同意畫面維持 Testing 狀態時 refresh token 會在 7 天後過期，但本專案只用 Google 做登入、不保存需要長期有效的 token，不受影響。
+
 ## 常用指令
 
 | 指令               | 說明                                                         |

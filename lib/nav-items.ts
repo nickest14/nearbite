@@ -21,3 +21,10 @@ export function isActivePath(pathname: string, href: NavHref): boolean {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
+
+// 不顯示主要導覽的頁面：登入頁（未登入時導覽沒有意義）。之後有全螢幕頁面在這裡加。
+const navHiddenPaths: ReadonlySet<string> = new Set(["/login"]);
+
+export function isNavHidden(pathname: string): boolean {
+  return navHiddenPaths.has(pathname);
+}

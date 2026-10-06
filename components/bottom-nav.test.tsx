@@ -44,4 +44,12 @@ describe("BottomNav", () => {
     expect(screen.getByRole("link", { name: "收藏" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("link", { name: "探索" })).not.toHaveAttribute("aria-current");
   });
+
+  it("在 /login 時不渲染導覽", () => {
+    usePathname.mockReturnValue("/login");
+    const { container } = render(<BottomNav />);
+
+    expect(screen.queryAllByRole("link")).toHaveLength(0);
+    expect(container).toBeEmptyDOMElement();
+  });
 });

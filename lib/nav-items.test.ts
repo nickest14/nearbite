@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { isActivePath, navItems } from "./nav-items";
+import { isActivePath, isNavHidden, navItems } from "./nav-items";
 
 describe("navItems", () => {
   it("有四個導覽項目", () => {
@@ -31,5 +31,17 @@ describe("isActivePath", () => {
     expect(isActivePath("/lists/abc", "/lists")).toBe(true);
     expect(isActivePath("/listsx", "/lists")).toBe(false);
     expect(isActivePath("/me", "/lists")).toBe(false);
+  });
+});
+
+describe("isNavHidden", () => {
+  it("登入頁不顯示導覽", () => {
+    expect(isNavHidden("/login")).toBe(true);
+  });
+
+  it("一般頁面顯示導覽", () => {
+    expect(isNavHidden("/")).toBe(false);
+    expect(isNavHidden("/lists")).toBe(false);
+    expect(isNavHidden("/foo")).toBe(false);
   });
 });

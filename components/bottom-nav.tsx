@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { isActivePath, navItems } from "@/lib/nav-items";
+import { isActivePath, isNavHidden, navItems } from "@/lib/nav-items";
 
 // 行動版底部導覽。需要 usePathname 判斷當前頁面，所以是 Client Component；
 // 桌面版（lg 以上）隱藏，改由 SideNav 呈現。
 export function BottomNav() {
   const pathname = usePathname();
+  if (isNavHidden(pathname)) return null;
 
   return (
     <nav

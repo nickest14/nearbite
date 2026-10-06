@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { isActivePath, navItems } from "@/lib/nav-items";
+import { isActivePath, isNavHidden, navItems } from "@/lib/nav-items";
 
 // 桌面版（lg 以上）側邊導覽，與 BottomNav 共用 navItems；行動版隱藏。
 export function SideNav() {
   const pathname = usePathname();
+  if (isNavHidden(pathname)) return null;
 
   return (
     <nav
