@@ -68,6 +68,20 @@ const PLACE_TYPE_TABLE: Readonly<Record<string, PlaceTypeEntry>> = {
   diner: { label: "小餐館", icon: Utensils },
   food_court: { label: "美食街", icon: Utensils },
   meal_takeaway: { label: "外帶", icon: Utensils },
+  // 台北車站實測出現、原本漏掉的類型
+  cake_shop: { label: "蛋糕", icon: Cake },
+  pastry_shop: { label: "甜點", icon: Croissant },
+  chocolate_shop: { label: "巧克力", icon: Cake },
+  donut_shop: { label: "甜甜圈", icon: Cake },
+  bubble_tea_store: { label: "手搖飲", icon: Coffee },
+  juice_shop: { label: "果汁", icon: Coffee },
+  japanese_curry_restaurant: { label: "日式咖哩", icon: Utensils },
+  yakiniku_restaurant: { label: "燒肉", icon: Beef },
+  asian_restaurant: { label: "亞洲料理", icon: Utensils },
+  chicken_restaurant: { label: "雞肉料理", icon: Utensils },
+  kebab_shop: { label: "沙威瑪", icon: Sandwich },
+  snack_bar: { label: "小吃", icon: Utensils },
+  deli: { label: "熟食店", icon: Sandwich },
 };
 
 const FALLBACK: PlaceTypeEntry = { label: "餐飲", icon: Utensils };
