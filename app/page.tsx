@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { NearbySearch } from "@/components/nearby/nearby-search";
 import { PageHeader } from "@/components/page-header";
 import { requireUser } from "@/lib/session";
 
@@ -14,7 +15,7 @@ export default async function ExplorePage() {
   return (
     <>
       <PageHeader title="探索" description="看看附近有什麼好吃的。" />
-      <p className="text-sm text-text-muted">附近餐廳搜尋即將登場。</p>
+      <NearbySearch />
     </>
   );
 }

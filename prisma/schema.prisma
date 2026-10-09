@@ -62,3 +62,25 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+// Google 店家的快取，也是之後評論與收藏的掛載點。
+// 依 Google 條款只有 googlePlaceId 可永久保存，其他 Google 欄位以 googleSyncedAt 判斷是否過期（30 天）。
+// 刻意沒有任何使用者位置或距離欄位：距離在 Server Action 內算完就丟。
+// Enterprise 等級欄位（價位、評論數、營業時間、電話、網站、照片）由店家詳情的 change 再加。
+model Restaurant {
+  id             String   @id @default(cuid())
+  googlePlaceId  String   @unique
+  name           String
+  address        String?
+  lat            Float
+  lng            Float
+  primaryType    String?
+  types          String[]
+  googleRating   Float?
+  businessStatus String? // OPERATIONAL / CLOSED_TEMPORARILY / CLOSED_PERMANENTLY
+  googleSyncedAt DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([lat, lng])
+}

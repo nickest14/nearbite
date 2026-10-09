@@ -50,6 +50,28 @@ pnpm dev                      # http://localhost:3000
 
 Google 不會對 OAuth 登入收費。同意畫面維持 Testing 狀態時 refresh token 會在 7 天後過期，但本專案只用 Google 做登入、不保存需要長期有效的 token，不受影響。
 
+## Google Maps Platform 設定
+
+附近搜尋用 Google Places API (New) 找店家、Geocoding API 把地址轉座標、Maps JavaScript API 畫地圖。三個都需要啟用帳單，但正常使用量在免費額度內（見下方「成本」）。
+
+1. 在 [Google Cloud Console](https://console.cloud.google.com/) 選擇與 OAuth 相同的專案，**Billing** 啟用帳單（需要信用卡，免費額度內不會扣款）
+2. **APIs & Services → Library** 啟用三個 API：**Places API (New)**（注意不是舊的 Places API）、**Maps JavaScript API**、**Geocoding API**
+3. **APIs & Services → Credentials → Create Credentials → API key**，建立**兩把**金鑰並各自設限制：
+   - **伺服器端金鑰** → 填 `.env` 的 `GOOGLE_MAPS_SERVER_API_KEY`
+     - Application restrictions：**None**（Server Action 的請求沒有 referrer）
+     - API restrictions：只勾 **Places API (New)** 與 **Geocoding API**
+   - **瀏覽器端金鑰** → 填 `.env` 的 `NEXT_PUBLIC_GOOGLE_MAPS_BROWSER_API_KEY`
+     - Application restrictions：**Websites**，加入 `http://localhost:3000/*`（正式環境再加正式網域）
+     - API restrictions：只勾 **Maps JavaScript API**
+4. **APIs & Services → Enabled APIs → 各 API → Quotas and System Limits** 設每日上限，避免被刷或程式出錯時超出免費額度：
+   - Places API (New) 的 Nearby Search：**150 次／日**（≈ 4,500／月）
+   - Geocoding API：**300 次／日**
+   - Maps JavaScript API 的 Map loads：**300 次／日**
+5. （建議）**Billing → Budgets & alerts** 設一個 1 美元的預算警示，超過就寄信
+6. `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID` 開發時可留空，程式會用 Google 的 `DEMO_MAP_ID`；正式環境到 **Google Maps Platform → Map Management** 建一個 Map ID 再填入
+
+**成本**：Places API (New) 依 FieldMask 中「最貴」的欄位計費。搜尋只要求 Pro 等級欄位（店名、地址、座標、類型、評分、營業狀態），每月 5,000 次免費；營業中、價位、評論數、電話、網站屬 Enterprise 等級（每月只有 1,000 次免費），留給店家詳情頁用 Place Details 取得。照片每月只有 1,000 張免費，所以**搜尋結果卡片不放照片**，用類型圖示代替。Geocoding 每月 10,000 次免費、Maps JavaScript 每月 10,000 次地圖載入免費。
+
 ## 常用指令
 
 | 指令               | 說明                                                         |
