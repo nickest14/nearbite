@@ -64,13 +64,14 @@ Google 不會對 OAuth 登入收費。同意畫面維持 Testing 狀態時 refre
      - Application restrictions：**Websites**，加入 `http://localhost:3000/*`（正式環境再加正式網域）
      - API restrictions：只勾 **Maps JavaScript API**
 4. **APIs & Services → Enabled APIs → 各 API → Quotas and System Limits** 設每日上限，避免被刷或程式出錯時超出免費額度：
-   - Places API (New) 的 Nearby Search：**150 次／日**（≈ 4,500／月）
+   - Places API (New) 的 Nearby Search（`SearchNearbyRequest per day`）：**150 次／日**（≈ 4,500／月）
+   - Places API (New) 的 Place Details（`GetPlaceRequest per day`）：**50 次／日**（詳情頁用，Enterprise 等級每月只有 1,000 次免費）
    - Geocoding API：**300 次／日**
    - Maps JavaScript API 的 Map loads：**300 次／日**
 5. （建議）**Billing → Budgets & alerts** 設一個 1 美元的預算警示，超過就寄信
 6. `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID` 開發時可留空，程式會用 Google 的 `DEMO_MAP_ID`；正式環境到 **Google Maps Platform → Map Management** 建一個 Map ID 再填入
 
-**成本**：Places API (New) 依 FieldMask 中「最貴」的欄位計費。搜尋只要求 Pro 等級欄位（店名、地址、座標、類型、評分、營業狀態），每月 5,000 次免費；營業中、價位、評論數、電話、網站屬 Enterprise 等級（每月只有 1,000 次免費），留給店家詳情頁用 Place Details 取得。照片每月只有 1,000 張免費，所以**搜尋結果卡片不放照片**，用類型圖示代替。Geocoding 每月 10,000 次免費、Maps JavaScript 每月 10,000 次地圖載入免費。
+**成本**：Places API (New) 依 FieldMask 中「最貴」的欄位計費。搜尋只要求 Pro 等級欄位（店名、地址、座標、類型、評分、營業狀態），每月 5,000 次免費；營業時間、價位、評論數、電話、網站屬 Enterprise 等級（每月只有 1,000 次免費），只在店家詳情頁用 Place Details 取得，並在資料庫快取 7 天（7–30 天背景更新、超過 30 天重抓）。照片每月只有 1,000 張免費，所以**整個 app 不顯示店家照片**，用類型圖示代替。Geocoding 每月 10,000 次免費、Maps JavaScript 每月 10,000 次地圖載入免費。
 
 ## 常用指令
 

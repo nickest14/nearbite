@@ -78,9 +78,19 @@ model Restaurant {
   types          String[]
   googleRating   Float?
   businessStatus String? // OPERATIONAL / CLOSED_TEMPORARILY / CLOSED_PERMANENTLY
-  googleSyncedAt DateTime
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  googleSyncedAt DateTime // 搜尋欄位最後一次同步
+
+  // 詳情欄位：由 Place Details 取得（Enterprise 計費），搜尋的 upsert 不會碰這些。
+  // detailsSyncedAt 為 null 表示從未取得詳情；7 天內新鮮、7–30 天背景更新、超過 30 天先重抓再顯示。
+  priceLevel        Int? // 0–4，對應 Google PRICE_LEVEL_*
+  googleRatingCount Int?
+  openingHours      Json? // Google regularOpeningHours 原樣：{ periods, weekdayDescriptions }
+  phone             String?
+  website           String?
+  utcOffsetMinutes  Int?
+  detailsSyncedAt   DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
   @@index([lat, lng])
 }

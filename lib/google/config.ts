@@ -37,6 +37,38 @@ export const PLACES_FIELD_MASK = [
 export const PLACES_SEARCH_NEARBY_URL = "https://places.googleapis.com/v1/places:searchNearby";
 export const GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json";
 
+// Place Details 的 FieldMask（欄位名不加 places. 前綴，與 Nearby Search 不同）。
+// 這組含 Enterprise 欄位（regularOpeningHours、priceLevel、電話、網站、評論數），整次呼叫以 Enterprise 計費：
+// 每月 1,000 次免費、之後 $35/千次。只有詳情頁會打，搭配 7 天快取與每日配額 50。
+// 加欄位前先看 openspec/changes/restaurant-detail/proposal.md 的成本段落；photos 與 reviews 不要加。
+export const PLACE_DETAILS_FIELD_MASK = [
+  "id",
+  "displayName",
+  "formattedAddress",
+  "location",
+  "types",
+  "primaryType",
+  "rating",
+  "businessStatus",
+  "userRatingCount",
+  "priceLevel",
+  "regularOpeningHours",
+  "nationalPhoneNumber",
+  "websiteUri",
+  "utcOffsetMinutes",
+].join(",");
+
+export const PLACE_DETAILS_URL = "https://places.googleapis.com/v1/places";
+
+// Google 的 priceLevel 列舉 → 0–4 的整數（資料庫存整數）
+export const PRICE_LEVELS: Readonly<Record<string, number>> = {
+  PRICE_LEVEL_FREE: 0,
+  PRICE_LEVEL_INEXPENSIVE: 1,
+  PRICE_LEVEL_MODERATE: 2,
+  PRICE_LEVEL_EXPENSIVE: 3,
+  PRICE_LEVEL_VERY_EXPENSIVE: 4,
+};
+
 // 對 Google 的伺服器端請求逾時。Server Action 本身沒有逾時，不設的話失敗時使用者會一直等
 export const GOOGLE_REQUEST_TIMEOUT_MS = 8_000;
 

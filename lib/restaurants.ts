@@ -1,4 +1,6 @@
+import { Prisma } from "@/generated/prisma/client";
 import { db } from "@/lib/db";
+import type { PlaceDetails } from "@/lib/google/place-details";
 import type { PlaceResult } from "@/lib/google/places";
 
 // 把 Places 搜尋結果寫進 Restaurant 表（design D6）。
@@ -20,6 +22,38 @@ export function dedupeByPlaceId(places: readonly PlaceResult[]): PlaceResult[] {
     result.push(place);
   }
   return result;
+}
+
+// 詳情取得後的寫入（design D3）：只更新詳情欄位與 detailsSyncedAt，
+// 順便更新 Google 也會回傳的評分與營業狀態，但不動搜尋的 googleSyncedAt。
+export async function updateRestaurantDetails(
+  id: string,
+  details: PlaceDetails,
+  now: Date = new Date(),
+): Promise<void> {
+  await db.restaurant.update({
+    where: { id },
+    data: {
+      googleRating: details.rating,
+      businessStatus: details.businessStatus,
+      googleRatingCount: details.ratingCount,
+      priceLevel: details.priceLevel,
+      // Json? 欄位不能直接給 null，要用 Prisma.DbNull 才會存成 SQL NULL
+      openingHours: details.openingHours ?? Prisma.DbNull,
+      phone: details.phone,
+      website: details.website,
+      utcOffsetMinutes: details.utcOffsetMinutes,
+      detailsSyncedAt: now,
+    },
+  });
+}
+
+// place_id 失效時標記歇業並視為已同步，避免每次開啟都重抓
+export async function markRestaurantGone(id: string, now: Date = new Date()): Promise<void> {
+  await db.restaurant.update({
+    where: { id },
+    data: { businessStatus: "CLOSED_PERMANENTLY", detailsSyncedAt: now },
+  });
 }
 
 export async function upsertRestaurants(

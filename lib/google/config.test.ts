@@ -1,7 +1,14 @@
 // @vitest-environment node
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { getServerApiKey, PLACES_FIELD_MASK, redactApiKey, SEARCH_TYPES } from "./config";
+import {
+  getServerApiKey,
+  PLACE_DETAILS_FIELD_MASK,
+  PLACES_FIELD_MASK,
+  PRICE_LEVELS,
+  redactApiKey,
+  SEARCH_TYPES,
+} from "./config";
 
 describe("getServerApiKey", () => {
   afterEach(() => {
@@ -48,6 +55,32 @@ describe("PLACES_FIELD_MASK", () => {
       "places.rating",
       "places.businessStatus",
     ]);
+  });
+});
+
+describe("PLACE_DETAILS_FIELD_MASK", () => {
+  it("是詳情頁需要的欄位，不加 places. 前綴", () => {
+    expect(PLACE_DETAILS_FIELD_MASK).toBe(
+      "id,displayName,formattedAddress,location,types,primaryType,rating,businessStatus,userRatingCount,priceLevel,regularOpeningHours,nationalPhoneNumber,websiteUri,utcOffsetMinutes",
+    );
+  });
+
+  it("不含照片、評論與 currentOpeningHours", () => {
+    for (const field of ["photos", "reviews", "currentOpeningHours", "places."]) {
+      expect(PLACE_DETAILS_FIELD_MASK).not.toContain(field);
+    }
+  });
+});
+
+describe("PRICE_LEVELS", () => {
+  it("五個列舉值對應 0–4", () => {
+    expect(PRICE_LEVELS).toEqual({
+      PRICE_LEVEL_FREE: 0,
+      PRICE_LEVEL_INEXPENSIVE: 1,
+      PRICE_LEVEL_MODERATE: 2,
+      PRICE_LEVEL_EXPENSIVE: 3,
+      PRICE_LEVEL_VERY_EXPENSIVE: 4,
+    });
   });
 });
 
